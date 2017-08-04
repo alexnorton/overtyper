@@ -1,4 +1,4 @@
-import { getTokens, getMatches } from '../matchInput';
+import { getTokens, getMatches, getScore } from '../matchInput';
 
 describe('getTokens', () => {
   it('converts sentences to tokens correctly', () => {
@@ -10,7 +10,7 @@ describe('getTokens', () => {
   });
 });
 
-describe('getLongestMatches', () => {
+describe('getMatches', () => {
   it('returns longest matches', () => {
     const scores = [
       [
@@ -53,5 +53,23 @@ describe('getLongestMatches', () => {
       { startSegment: 0, startWord: 4, length: 2 },
       { startSegment: 1, startWord: 0, length: 1 },
     ]);
+  });
+});
+
+describe('getScore', () => {
+  it('returns scores correctly', () => {
+    const scores = [
+      { segment: 0, word: 0, score: 0 },
+      { segment: 0, word: 1, score: 0.3 },
+      { segment: 0, word: 2, score: 0.4 },
+      { segment: 0, word: 3, score: 0.08 },
+      { segment: 0, word: 4, score: 0.52 },
+      { segment: 1, word: 0, score: 0.02 },
+      { segment: 1, word: 1, score: 0.55 },
+      { segment: 1, word: 2, score: 0.21 },
+      { segment: 1, word: 3, score: 0.05 },
+    ];
+
+    expect(getScore(scores, 0, 3)).toBe(0.08);
   });
 });

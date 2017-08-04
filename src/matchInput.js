@@ -30,6 +30,11 @@ const getScores = (input, transcript) => {
   return results;
 };
 
+const getScore = (scores, segment, word) => {
+  const results = scores.filter(score => score.segment === segment && score.word === word);
+  return results.length > 0 && results[0].score;
+};
+
 const getMatches = (scores, scoreThreshold) => {
   const matchRoots = scores[0]
     .filter(score => score.score >= scoreThreshold)
@@ -39,15 +44,21 @@ const getMatches = (scores, scoreThreshold) => {
       length: 1,
     }));
 
-  console.log(matchRoots);
+  return matchRoots.map((initialMatch) => {
+    let finished = false;
 
-  matchRoots.map((initialMatch) => {
     const match = initialMatch;
 
-    for(let i = 1; i < scores.length; i++) {
-      
+    for (let i = 1; i < scores.length && !finished; i += 1) {
+      if (getScore(scores, match.segment, match.word + i) > scoreThreshold) {
+        match.length += 1;
+      } else {
+        finished = true;
+      }
     }
-  })
+
+    return match;
+  });
 };
 
 const matchInput = (input, transcript) => {
@@ -56,10 +67,6 @@ const matchInput = (input, transcript) => {
   const scores = tokens.map(token => getScores(token, transcript));
 
   getMatches(scores, SCORE_THRESHOLD);
-
-  console.log(scores);
-
-
 };
 
 export default matchInput;
@@ -67,4 +74,5 @@ export default matchInput;
 export {
   getTokens,
   getMatches,
+  getScore,
 };
