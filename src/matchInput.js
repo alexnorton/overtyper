@@ -49,8 +49,8 @@ const getMatches = (scores, scoreThreshold) => {
 
     const match = initialMatch;
 
-    for (let i = 1; i < scores.length && !finished; i += 1) {
-      if (getScore(scores, match.segment, match.word + i) > scoreThreshold) {
+    for (let i = 1; !finished && i < scores.length; i += 1) {
+      if (getScore(scores[i], match.startSegment, match.startWord + i) >= scoreThreshold) {
         match.length += 1;
       } else {
         finished = true;
