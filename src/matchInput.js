@@ -66,7 +66,7 @@ const matchInput = (input, transcript) => {
 
   const scores = tokens.map(token => getScores(token, transcript));
 
-  getMatches(scores, SCORE_THRESHOLD);
+  return getMatches(scores, SCORE_THRESHOLD);
 };
 
 export default matchInput;
