@@ -1,6 +1,32 @@
 import { Transcript } from 'transcript-model';
 
-import { getTokens, getMatches, getScore, getScores } from '../matchInput';
+import matchInput, { getTokens, getMatches, getScore, getScores } from '../matchInput';
+
+const transcript = Transcript.fromJSON({
+  speakers: [
+    { name: null },
+    { name: null },
+  ],
+  segments: [
+    { speaker: 1,
+      words: [
+        { start: 0.85, end: 1.15, text: 'Scottish' },
+        { start: 1.18, end: 1.52, text: 'Government' },
+        { start: 1.52, end: 2.16, text: 'remains' },
+        { start: 2.30, end: 3.07, text: 'committed' },
+        { start: 3.36, end: 4.06, text: 'strongly' },
+      ] },
+    { speaker: 1,
+      words: [
+        { start: 23.26, end: 23.44, text: 'I' },
+        { start: 23.45, end: 23.70, text: 'am' },
+        { start: 23.73, end: 24.11, text: 'therefore' },
+        { start: 24.15, end: 24.76, text: 'confirming' },
+        { start: 24.76, end: 25.20, text: 'today.' },
+        { start: 25.30, end: 25.82, text: 'Having' },
+      ] },
+  ],
+});
 
 describe('getTokens', () => {
   it('converts sentences to tokens correctly', () => {
@@ -15,32 +41,6 @@ describe('getTokens', () => {
 describe('getScores', () => {
   it('calculates scores correctly', () => {
     const input = 'scottish';
-
-    const transcript = Transcript.fromJSON({
-      speakers: [
-        { name: null },
-        { name: null },
-      ],
-      segments: [
-        { speaker: 1,
-          words: [
-            { start: 0.85, end: 1.15, text: 'Scottish' },
-            { start: 1.18, end: 1.52, text: 'Government' },
-            { start: 1.52, end: 2.16, text: 'remains' },
-            { start: 2.30, end: 3.07, text: 'committed' },
-            { start: 3.36, end: 4.06, text: 'strongly' },
-          ] },
-        { speaker: 1,
-          words: [
-            { start: 23.26, end: 23.44, text: 'I' },
-            { start: 23.45, end: 23.70, text: 'am' },
-            { start: 23.73, end: 24.11, text: 'therefore' },
-            { start: 24.15, end: 24.76, text: 'confirming' },
-            { start: 24.76, end: 25.20, text: 'today.' },
-            { start: 25.30, end: 25.82, text: 'Having' },
-          ] },
-      ],
-    });
 
     expect(getScores(input, transcript)).toEqual([
       { segment: 0, word: 0, score: 1 },
@@ -119,5 +119,15 @@ describe('getScore', () => {
     ];
 
     expect(getScore(scores, 0, 3)).toBe(0.08);
+  });
+
+  describe('matchInput', () => {
+    it('return matches correctly', () => {
+      const input = 'government remains';
+
+      expect(matchInput(input, transcript)).toEqual([
+        { startSegment: 0, startWord: 1, length: 2 },
+      ]);
+    });
   });
 });
