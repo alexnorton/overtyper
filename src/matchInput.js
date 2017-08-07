@@ -75,4 +75,5 @@ export {
   getTokens,
   getMatches,
   getScore,
+  getScores,
 };
