@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Transcript } from 'transcript-model';
 
 const TranscriptDisplay = ({ transcript }) => (
   <div>
@@ -12,5 +14,9 @@ const TranscriptDisplay = ({ transcript }) => (
     ))}
   </div>
 );
+
+TranscriptDisplay.propTypes = {
+  transcript: PropTypes.instanceOf(Transcript).isRequired,
+};
 
 export default TranscriptDisplay;

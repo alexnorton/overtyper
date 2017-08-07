@@ -5,6 +5,7 @@
   "dependencies": {
     "bulma": "^0.4.3",
     "fast-levenshtein": "^2.0.6",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10",
@@ -26,7 +27,16 @@
   "eslintConfig": {
     "extends": "airbnb",
     "rules": {
-      "jsx-a11y/href-no-hash": "off"
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ],
+      "react/no-array-index-key": "off"
     }
   }
 }
