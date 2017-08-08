@@ -90,14 +90,50 @@ describe('getScore', () => {
 
     expect(getScore(scores, 0, 3)).toBe(0.08);
   });
+});
 
-  describe('matchInput', () => {
-    it('return matches correctly', () => {
-      const input = 'government remains';
+describe('matchInput', () => {
+  it('return a single match correctly', () => {
+    const input = 'listened and something the scottish';
 
-      expect(matchInput(input, transcript)).toEqual([
-        { startSegment: 0, startWord: 1, length: 2 },
-      ]);
-    });
+    expect(matchInput(input, transcript)).toEqual([{
+      start: { segment: 2, word: 6, length: 2 },
+      end: { segment: 2, word: 9, length: 2 },
+      replacement: 'something',
+    }]);
+  });
+
+  it('returns multiple potential matches correctly', () => {
+    const input = 'scottish government';
+
+    expect(matchInput(input, transcript)).toEqual([
+      {
+        start: { segment: 0, word: 0, length: 2 },
+        end: null,
+        replacement: null,
+      },
+      {
+        start: { segment: 2, word: 10, length: 2 },
+        end: null,
+        replacement: null,
+      },
+    ]);
+  });
+
+  it('returns multiple potential matches with replacements correctly', () => {
+    const input = 'scottish government something';
+
+    expect(matchInput(input, transcript)).toEqual([
+      {
+        start: { segment: 0, word: 0, length: 2 },
+        end: null,
+        replacement: 'something',
+      },
+      {
+        start: { segment: 2, word: 10, length: 2 },
+        end: null,
+        replacement: 'something',
+      },
+    ]);
   });
 });
