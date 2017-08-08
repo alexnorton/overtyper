@@ -2,7 +2,13 @@ import { Transcript } from 'transcript-model';
 import fs from 'fs';
 import path from 'path';
 
-import matchInput, { getTokens, getMatches, getScore, getScores } from '../matchInput';
+import matchInput, {
+  getTokens,
+  getForwardsMatches,
+  getBackwardsMatches,
+  getScore,
+  getScores,
+} from '../matchInput';
 
 const transcript = Transcript.fromJSON(
   JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'transcript.json'))),
@@ -28,48 +34,44 @@ describe('getScores', () => {
   });
 });
 
-describe('getMatches', () => {
+describe('getForwardsMatches', () => {
   it('returns longest matches', () => {
-    const scores = [
-      [
-        { segment: 0, word: 0, score: 0.1 },
-        { segment: 0, word: 1, score: 0 },
-        { segment: 0, word: 2, score: 0.05 },
-        { segment: 0, word: 3, score: 0.6 },
-        { segment: 0, word: 4, score: 0.92 },
-        { segment: 0, word: 5, score: 0 },
-        { segment: 0, word: 6, score: 0.17 },
-        { segment: 0, word: 7, score: 0.2 },
-        { segment: 1, word: 0, score: 0.95 },
-        { segment: 1, word: 1, score: 0.1 },
-        { segment: 1, word: 2, score: 0.4 },
-        { segment: 1, word: 3, score: 0.34 },
-        { segment: 1, word: 4, score: 0.03 },
-      ],
-      [
-        { segment: 0, word: 0, score: 0 },
-        { segment: 0, word: 1, score: 0.3 },
-        { segment: 0, word: 2, score: 0.4 },
-        { segment: 0, word: 3, score: 0.08 },
-        { segment: 0, word: 4, score: 0.52 },
-        { segment: 0, word: 5, score: 1 },
-        { segment: 0, word: 6, score: 0.02 },
-        { segment: 0, word: 7, score: 0.7 },
-        { segment: 1, word: 0, score: 0.02 },
-        { segment: 1, word: 1, score: 0.55 },
-        { segment: 1, word: 2, score: 0.21 },
-        { segment: 1, word: 3, score: 0.05 },
-        { segment: 1, word: 4, score: 0.3 },
-      ],
-    ];
+    const input = 'the end of the pizzas that process';
+
+    const tokens = getTokens(input);
+    const scores = tokens.map(token => getScores(token, transcript));
 
     const threshold = 0.9;
 
-    const matches = getMatches(scores, threshold);
+    const matches = getForwardsMatches(scores, threshold);
 
     expect(matches).toEqual([
-      { startSegment: 0, startWord: 4, length: 2 },
-      { startSegment: 1, startWord: 0, length: 1 },
+      { length: 1, startSegment: 0, startWord: 6 },
+      { length: 3, startSegment: 0, startWord: 14 },
+      { length: 1, startSegment: 1, startWord: 18 },
+      { length: 4, startSegment: 1, startWord: 28 },
+      { length: 1, startSegment: 1, startWord: 31 },
+      { length: 1, startSegment: 2, startWord: 9 },
+      { length: 1, startSegment: 2, startWord: 14 },
+      { length: 1, startSegment: 3, startWord: 6 },
+    ]);
+  });
+});
+
+describe('getBackwardsMatches', () => {
+  it('returns longest matches', () => {
+    const input = 'the end of the pizzas that process';
+
+    const tokens = getTokens(input);
+    const scores = tokens.map(token => getScores(token, transcript));
+
+    const threshold = 0.9;
+
+    const matches = getBackwardsMatches(scores, threshold);
+
+    expect(matches).toEqual([
+      { startSegment: 0, startWord: 18, length: 1 },
+      { startSegment: 1, startWord: 33, length: 2 },
     ]);
   });
 });
