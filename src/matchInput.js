@@ -39,8 +39,8 @@ const getForwardsMatches = (scores, scoreThreshold) => {
   const matchRoots = scores[0]
     .filter(score => score.score >= scoreThreshold)
     .map(score => ({
-      startSegment: score.segment,
-      startWord: score.word,
+      segment: score.segment,
+      word: score.word,
       length: 1,
     }));
 
@@ -50,7 +50,7 @@ const getForwardsMatches = (scores, scoreThreshold) => {
     const match = initialMatch;
 
     for (let i = 1; !finished && i < scores.length; i += 1) {
-      if (getScore(scores[i], match.startSegment, match.startWord + i) >= scoreThreshold) {
+      if (getScore(scores[i], match.segment, match.word + i) >= scoreThreshold) {
         match.length += 1;
       } else {
         finished = true;
@@ -65,8 +65,8 @@ const getBackwardsMatches = (scores, scoreThreshold) => {
   const matchRoots = scores[scores.length - 1]
     .filter(score => score.score >= scoreThreshold)
     .map(score => ({
-      startSegment: score.segment,
-      startWord: score.word,
+      segment: score.segment,
+      word: score.word,
       length: 1,
     }));
 
@@ -77,7 +77,7 @@ const getBackwardsMatches = (scores, scoreThreshold) => {
 
     for (let i = 1; !finished && i < scores.length; i += 1) {
       if (getScore(
-        scores[scores.length - 1 - i], match.startSegment, match.startWord - i
+        scores[scores.length - 1 - i], match.segment, match.word - i
       ) >= scoreThreshold) {
         match.length += 1;
       } else {
@@ -87,18 +87,30 @@ const getBackwardsMatches = (scores, scoreThreshold) => {
 
     return {
       length: match.length,
-      startSegment: match.startSegment,
-      startWord: (match.startWord - match.length) + 1,
+      segment: match.segment,
+      word: (match.word - match.length) + 1,
     };
   });
 };
 
 const matchInput = (input, transcript) => {
   const tokens = getTokens(input);
-
   const scores = tokens.map(token => getScores(token, transcript));
 
-  return getForwardsMatches(scores, SCORE_THRESHOLD);
+  const forwardsMatches = getForwardsMatches(scores, SCORE_THRESHOLD);
+
+  if (forwardsMatches.length > 0) {
+    const sortedForwardsMatches = forwardsMatches.sort((a, b) => a.length - b.length);
+
+    return sortedForwardsMatches.map(match => ({
+      start: match,
+      end: null,
+      replacement: tokens.length > match.length
+        ? tokens.slice(match.length).join(' ') : null,
+    }));
+  }
+
+  return [];
 };
 
 export default matchInput;

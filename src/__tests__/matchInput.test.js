@@ -46,14 +46,14 @@ describe('getForwardsMatches', () => {
     const matches = getForwardsMatches(scores, threshold);
 
     expect(matches).toEqual([
-      { length: 1, startSegment: 0, startWord: 6 },
-      { length: 3, startSegment: 0, startWord: 14 },
-      { length: 1, startSegment: 1, startWord: 18 },
-      { length: 4, startSegment: 1, startWord: 28 },
-      { length: 1, startSegment: 1, startWord: 31 },
-      { length: 1, startSegment: 2, startWord: 9 },
-      { length: 1, startSegment: 2, startWord: 14 },
-      { length: 1, startSegment: 3, startWord: 6 },
+      { length: 1, segment: 0, word: 6 },
+      { length: 3, segment: 0, word: 14 },
+      { length: 1, segment: 1, word: 18 },
+      { length: 4, segment: 1, word: 28 },
+      { length: 1, segment: 1, word: 31 },
+      { length: 1, segment: 2, word: 9 },
+      { length: 1, segment: 2, word: 14 },
+      { length: 1, segment: 3, word: 6 },
     ]);
   });
 });
@@ -70,8 +70,8 @@ describe('getBackwardsMatches', () => {
     const matches = getBackwardsMatches(scores, threshold);
 
     expect(matches).toEqual([
-      { startSegment: 0, startWord: 18, length: 1 },
-      { startSegment: 1, startWord: 33, length: 2 },
+      { segment: 0, word: 18, length: 1 },
+      { segment: 1, word: 33, length: 2 },
     ]);
   });
 });
