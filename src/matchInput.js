@@ -100,7 +100,28 @@ const matchInput = (input, transcript) => {
   const forwardsMatches = getForwardsMatches(scores, SCORE_THRESHOLD);
 
   if (forwardsMatches.length > 0) {
-    const sortedForwardsMatches = forwardsMatches.sort((a, b) => a.length - b.length);
+    const sortedForwardsMatches = forwardsMatches.sort(
+      (a, b) => b.length - a.length,
+    );
+
+    if (forwardsMatches.length < tokens.length) {
+      const backwardsMatches = getBackwardsMatches(scores, SCORE_THRESHOLD);
+
+      if (backwardsMatches.length > 0) {
+        const sortedBackwardsMatches = backwardsMatches.sort(
+          (a, b) => b.length - a.length,
+        );
+
+        return [{
+          start: sortedForwardsMatches[0],
+          end: sortedBackwardsMatches[0],
+          replacement: tokens.slice(
+            sortedForwardsMatches[0].length,
+            tokens.length - sortedBackwardsMatches[0].length,
+          ).join(' '),
+        }];
+      }
+    }
 
     return sortedForwardsMatches.map(match => ({
       start: match,
