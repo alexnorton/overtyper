@@ -95,6 +95,12 @@ describe('getScore', () => {
 });
 
 describe('matchInput', () => {
+  it('returns an empty array when there are no matches', () => {
+    const input = 'alex is great';
+
+    expect(matchInput(input, transcript)).toEqual([]);
+  });
+
   it('return a single match correctly', () => {
     const input = 'listened and something the scottish';
 
