@@ -56,7 +56,7 @@ describe('getTranscriptSpans', () => {
 
     const spans = getTranscriptSpans(transcript, matches);
 
-    const expectedSpans = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'spans-potential_matches.json')));
+    const expectedSpans = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'spans-potential_matches_with_replacements.json')));
 
     expect(spans).toEqual(expectedSpans);
   });
