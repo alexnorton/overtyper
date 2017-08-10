@@ -1,0 +1,162 @@
+{
+  "segments": [
+    {
+      "spans": [
+        {
+          "type": null,
+          "words": [
+            { "text": "Scottish", "start": 0.85, "end": 1.15 },
+            { "text": "Government", "start": 1.18, "end": 1.52 },
+            { "text": "remains", "start": 1.52, "end": 2.16 },
+            { "text": "committed", "start": 2.3, "end": 3.07 },
+            { "text": "strongly", "start": 3.36, "end": 4.06 },
+            { "text": "to", "start": 4.16, "end": 4.3 },
+            { "text": "the", "start": 4.3, "end": 4.37 },
+            { "text": "principle", "start": 4.37, "end": 4.85 },
+            { "text": "of", "start": 4.85, "end": 4.97 },
+            { "text": "giving", "start": 4.97, "end": 5.28 },
+            { "text": "Scotland,", "start": 5.28, "end": 5.85 },
+            { "text": "a", "start": 6.01, "end": 6.1 },
+            { "text": "choice", "start": 6.13, "end": 6.68 },
+            { "text": "at", "start": 6.71, "end": 6.86 },
+            { "text": "the", "start": 6.86, "end": 6.98 },
+            { "text": "end", "start": 7.01, "end": 7.45 },
+            { "text": "of", "start": 7.48, "end": 7.67 },
+            { "text": "this", "start": 7.67, "end": 7.84 },
+            { "text": "process.", "start": 7.84, "end": 8.46 },
+            { "text": "I", "start": 8.85, "end": 9 },
+            { "text": "want", "start": 9, "end": 9.28 },
+            { "text": "to", "start": 9.28, "end": 9.75 }
+          ]
+        }
+      ]
+    },
+    {
+      "spans": [
+        {
+          "type": null,
+          "words": [
+            { "text": "reassure", "start": 10.12, "end": 10.66 },
+            { "text": "people", "start": 10.66, "end": 11.07 },
+            { "text": "that", "start": 11.11, "end": 11.19 },
+            { "text": "a", "start": 11.22, "end": 11.35 },
+            { "text": "proposal", "start": 11.36, "end": 11.9 },
+            { "text": "is", "start": 11.89, "end": 12.01 },
+            { "text": "not", "start": 12.01, "end": 12.3 },
+            { "text": "for", "start": 12.3, "end": 12.43 },
+            { "text": "a", "start": 12.43, "end": 12.51 },
+            { "text": "referendum", "start": 12.51, "end": 13.25 },
+            { "text": "now", "start": 13.28, "end": 13.64 },
+            { "text": "or", "start": 13.98, "end": 14.23 },
+            { "text": "before", "start": 14.23, "end": 14.64 },
+            { "text": "that", "start": 14.64, "end": 14.77 },
+            { "text": "is", "start": 14.77, "end": 14.88 },
+            { "text": "sufficient", "start": 14.88, "end": 15.35 },
+            { "text": "clarity", "start": 15.35, "end": 15.86 },
+            { "text": "about", "start": 15.89, "end": 16.13 },
+            { "text": "the", "start": 16.13, "end": 16.25 },
+            { "text": "options,", "start": 16.25, "end": 16.75 },
+            { "text": "but", "start": 17.08, "end": 17.25 },
+            { "text": "rather", "start": 17.25, "end": 17.58 },
+            { "text": "to", "start": 17.58, "end": 17.73 },
+            { "text": "give", "start": 17.73, "end": 18.02 },
+            { "text": "them", "start": 18.02, "end": 18.27 },
+            { "text": "a", "start": 18.27, "end": 18.34 },
+            { "text": "choice", "start": 18.34, "end": 18.81 },
+            { "text": "at", "start": 18.84, "end": 18.99 },
+            { "text": "the", "start": 18.99, "end": 19.14 },
+            { "text": "end", "start": 19.17, "end": 19.56 },
+            { "text": "of", "start": 19.56, "end": 19.71 },
+            { "text": "the", "start": 19.71, "end": 19.79 },
+            { "text": "breaks", "start": 19.79, "end": 20.13 },
+            { "text": "that", "start": 20.13, "end": 20.21 },
+            { "text": "process", "start": 20.2, "end": 20.81 },
+            { "text": "that", "start": 21.06, "end": 21.31 },
+            { "text": "clarity", "start": 21.31, "end": 21.84 },
+            { "text": "has", "start": 21.84, "end": 22.27 },
+            { "text": "emerged.", "start": 22.3, "end": 22.91 }
+          ]
+        }
+      ]
+    },
+    {
+      "spans": [
+        {
+          "type": null,
+          "words": [
+            { "text": "I", "start": 23.26, "end": 23.44 },
+            { "text": "am", "start": 23.45, "end": 23.7 },
+            { "text": "therefore", "start": 23.73, "end": 24.11 },
+            { "text": "confirming", "start": 24.15, "end": 24.76 },
+            { "text": "today.", "start": 24.76, "end": 25.2 },
+            { "text": "Having", "start": 25.3, "end": 25.82 },
+            { "text": "listened", "start": 25.85, "end": 26.3 },
+            { "text": "and", "start": 26.3, "end": 26.54 },
+            { "text": "reflected", "start": 26.54, "end": 27.18 },
+            { "text": "the", "start": 27.4, "end": 27.5 }
+          ]
+        },
+        {
+          "type": "match_start",
+          "words": [
+            { "text": "Scottish", "start": 27.5, "end": 27.84 },
+            { "text": "Government", "start": 27.84, "end": 28.25 }
+          ]
+        },
+        {
+          "type": "replaced",
+          "words": [
+            { "text": "will", "start": 28.25, "end": 28.6 }
+          ]
+        },
+        {
+          "type": "replacement",
+          "words": [
+            { "text": "hello" }
+          ]
+        },
+        {
+          "type": "match_end",
+          "words": [
+            { "text": "reset", "start": 28.64, "end": 29.38 }
+          ]
+        },
+        {
+          "type": null,
+          "words": [
+            { "text": "the", "start": 29.41, "end": 29.5 },
+            { "text": "plan.", "start": 29.5, "end": 30.01 },
+            { "text": "I", "start": 30.32, "end": 30.51 },
+            { "text": "set", "start": 30.51, "end": 30.88 },
+            { "text": "out", "start": 30.88, "end": 31.31 },
+            { "text": "on", "start": 31.44, "end": 31.6 },
+            { "text": "March", "start": 31.6, "end": 32.11 },
+            { "text": "thirteenth.", "start": 32.2, "end": 32.94 }
+          ]
+        }
+      ]
+    },
+    {
+      "spans": [
+        {
+          "type": null,
+          "words": [
+            { "text": "We", "start": 33.22, "end": 33.38 },
+            { "text": "will", "start": 33.38, "end": 33.52 },
+            { "text": "not", "start": 33.52, "end": 33.96 },
+            { "text": "seek", "start": 33.96, "end": 34.53 },
+            { "text": "to", "start": 34.59, "end": 34.71 },
+            { "text": "introduce", "start": 34.74, "end": 35.32 },
+            { "text": "the", "start": 35.32, "end": 35.42 },
+            { "text": "legislation", "start": 35.42, "end": 36.35 },
+            { "text": "for", "start": 36.6, "end": 36.77 },
+            { "text": "an", "start": 36.77, "end": 36.85 },
+            { "text": "independence", "start": 36.85, "end": 37.51 },
+            { "text": "referendum", "start": 37.51, "end": 38.23 },
+            { "text": "immediately.", "start": 38.49, "end": 39.27 }
+          ]
+        }
+      ]
+    }
+  ]
+}
