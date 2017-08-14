@@ -22,12 +22,21 @@ const getTranscriptSpans = (transcript, matches) => {
         spanType = 'match_start';
       } else if (matches.filter(match =>
         match.replacement
-        && !match.end
         && segmentIndex === match.start.segment
         && wordIndex >= match.start.word + match.start.length
-        && wordIndex < match.start.word + match.start.length + 1,
+        && (
+          (!match.end && wordIndex < match.start.word + match.start.length + 1)
+          || (match.end && wordIndex < match.end.word)
+        ),
       ).length) {
         spanType = 'replaced';
+      } else if (matches.filter(match =>
+        match.end
+        && segmentIndex === match.end.segment
+        && wordIndex >= match.end.word
+        && wordIndex < match.end.word + match.end.length,
+      ).length) {
+        spanType = 'match_end';
       } else {
         spanType = null;
       }
@@ -37,7 +46,7 @@ const getTranscriptSpans = (transcript, matches) => {
           spans.push(span);
         }
 
-        if (span.type === 'replaced' && spanType === null) {
+        if (span.type === 'replaced' && (spanType === null || spanType === 'match_end')) {
           const thisMatch = matches.filter(match =>
             segmentIndex === match.start.segment
             && wordIndex === match.start.word + match.start.length + 1,
