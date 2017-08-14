@@ -2,6 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Transcript } from 'transcript-model';
 
+const SPAN_TYPES = {
+  MATCH_START: 'match_start',
+  MATCH_END: 'match_end',
+  REPLACED: 'replaced',
+  REPLACEMENT: 'replacement',
+};
+
 const getTranscriptSpans = (transcript, matches) => {
   const segments = transcript.segments.toArray().map((segment, segmentIndex) => {
     let span = {
@@ -19,7 +26,7 @@ const getTranscriptSpans = (transcript, matches) => {
         && wordIndex >= match.start.word
         && wordIndex < match.start.word + match.start.length,
       ).length) {
-        spanType = 'match_start';
+        spanType = SPAN_TYPES.MATCH_START;
       } else if (matches.filter(match =>
         match.replacement
         && segmentIndex === match.start.segment
@@ -29,14 +36,14 @@ const getTranscriptSpans = (transcript, matches) => {
           || (match.end && wordIndex < match.end.word)
         ),
       ).length) {
-        spanType = 'replaced';
+        spanType = SPAN_TYPES.REPLACED;
       } else if (matches.filter(match =>
         match.end
         && segmentIndex === match.end.segment
         && wordIndex >= match.end.word
         && wordIndex < match.end.word + match.end.length,
       ).length) {
-        spanType = 'match_end';
+        spanType = SPAN_TYPES.MATCH_END;
       } else {
         spanType = null;
       }
@@ -46,14 +53,15 @@ const getTranscriptSpans = (transcript, matches) => {
           spans.push(span);
         }
 
-        if (span.type === 'replaced' && (spanType === null || spanType === 'match_end')) {
+        if (span.type === SPAN_TYPES.REPLACED
+          && (spanType === null || spanType === SPAN_TYPES.MATCH_END)) {
           const thisMatch = matches.filter(match =>
             segmentIndex === match.start.segment
             && wordIndex === match.start.word + match.start.length + 1,
           )[0];
 
           spans.push({
-            type: 'replacement',
+            type: SPAN_TYPES.REPLACEMENT,
             words: [
               { text: thisMatch.replacement },
             ],
