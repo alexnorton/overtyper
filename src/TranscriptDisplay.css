@@ -1,0 +1,11 @@
+.span_match_start, .span_match_end {
+  background: aquamarine; 
+}
+
+.span_replaced {
+  text-decoration: line-through;
+}
+
+.span_replacement {
+  font-style: italic;
+}

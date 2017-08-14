@@ -26,15 +26,22 @@ class App extends Component {
 
   handleInputChange(e) {
     const inputValue = e.target.value;
-    matchInput(inputValue, this.state.transcript);
-    this.setState({ inputValue });
+
+    const matches = matchInput(inputValue, this.state.transcript);
+
+    console.log(matches);
+
+    this.setState({ inputValue, matches });
   }
 
   render() {
     return (
       <div className="container">
         <h1 className="title">Overtyper</h1>
-        <TranscriptDisplay transcript={this.state.transcript} />
+        <TranscriptDisplay
+          transcript={this.state.transcript}
+          matches={this.state.matches}
+        />
         <input
           value={this.state.inputValue}
           onChange={this.handleInputChange}

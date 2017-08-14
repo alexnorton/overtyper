@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Transcript } from 'transcript-model';
 
+import './TranscriptDisplay.css';
+
 const SPAN_TYPES = {
   MATCH_START: 'match_start',
   MATCH_END: 'match_end',
@@ -91,18 +93,21 @@ const getTranscriptSpans = (transcript, matches) => {
   return { segments };
 };
 
-const TranscriptDisplay = ({ transcript, matches }) => (
-  <div>
-    {transcript.segments.map((segment, segmentIndex) => (
+const TranscriptDisplay = ({ transcript, matches }) => {
+  const spans = getTranscriptSpans(transcript, matches);
+
+  return (<div>
+    {spans.segments.map((segment, segmentIndex) => (
       <p key={segmentIndex}>
-        {segment.words.map((word, wordIndex) => (
-          word.text
-        ))
-          .reduce((prev, curr) => [prev, ' ', curr])}
+        {segment.spans.map((span, spanIndex) => (
+          <span key={spanIndex} className={span.type && `span_${span.type}`}>
+            {span.words.map(word => word.text).join(' ')}
+          </span>
+        )).reduce((prev, curr) => [prev, ' ', curr])}
       </p>
     ))}
-  </div>
-);
+  </div>);
+};
 
 TranscriptDisplay.propTypes = {
   transcript: PropTypes.instanceOf(Transcript).isRequired,
