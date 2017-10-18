@@ -13,34 +13,19 @@ const getTokens = input => (
     .map(normaliseToken)
 );
 
-const getScores = (input, transcript) => {
-  const results = [];
-
-  transcript.segments.forEach((segment, segmentIndex) => {
-    segment.words.forEach((word, wordIndex) => {
-      results.push({
-        segment: segmentIndex,
-        word: wordIndex,
-        score: (word.text.length - levenshtein.get(normaliseToken(word.text), input))
-          / word.text.length,
-      });
-    });
-  });
-
-  return results;
-};
-
-const getScore = (scores, segment, word) => {
-  const results = scores.filter(score => score.segment === segment && score.word === word);
-  return results.length > 0 && results[0].score;
-};
+const getScores = (input, transcript) => (
+  transcript.map(word => (
+    word.text.length - levenshtein.get(normaliseToken(word.text), input))
+        / word.text.length
+  )
+);
 
 const getForwardsMatches = (scores, scoreThreshold) => {
   const matchRoots = scores[0]
+    .map((score, index) => ({ score, index }))
     .filter(score => score.score >= scoreThreshold)
     .map(score => ({
-      segment: score.segment,
-      word: score.word,
+      index: score.index,
       length: 1,
     }));
 
@@ -50,7 +35,7 @@ const getForwardsMatches = (scores, scoreThreshold) => {
     const match = initialMatch;
 
     for (let i = 1; !finished && i < scores.length; i += 1) {
-      if (getScore(scores[i], match.segment, match.word + i) >= scoreThreshold) {
+      if (scores[i][match.index + i] >= scoreThreshold) {
         match.length += 1;
       } else {
         finished = true;
@@ -63,10 +48,10 @@ const getForwardsMatches = (scores, scoreThreshold) => {
 
 const getBackwardsMatches = (scores, scoreThreshold) => {
   const matchRoots = scores[scores.length - 1]
+    .map((score, index) => ({ score, index }))
     .filter(score => score.score >= scoreThreshold)
     .map(score => ({
-      segment: score.segment,
-      word: score.word,
+      index: score.index,
       length: 1,
     }));
 
@@ -76,9 +61,7 @@ const getBackwardsMatches = (scores, scoreThreshold) => {
     const match = initialMatch;
 
     for (let i = 1; !finished && i < scores.length; i += 1) {
-      if (getScore(
-        scores[scores.length - 1 - i], match.segment, match.word - i
-      ) >= scoreThreshold) {
+      if (scores[scores.length - 1 - i][match.index - i] >= scoreThreshold) {
         match.length += 1;
       } else {
         finished = true;
@@ -87,8 +70,7 @@ const getBackwardsMatches = (scores, scoreThreshold) => {
 
     return {
       length: match.length,
-      segment: match.segment,
-      word: (match.word - match.length) + 1,
+      index: (match.index - match.length) + 1,
     };
   });
 };
@@ -140,6 +122,5 @@ export {
   getTokens,
   getForwardsMatches,
   getBackwardsMatches,
-  getScore,
   getScores,
 };
