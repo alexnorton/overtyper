@@ -35,13 +35,16 @@ class App extends Component {
     return (
       <div className="container">
         <h1 className="title">Overtyper</h1>
+        <h2>Transcript</h2>
         <TranscriptDisplay
           transcript={this.state.transcript}
           matches={this.state.matches}
         />
+        <h2>Input</h2>
         <input
           value={this.state.inputValue}
           onChange={this.handleInputChange}
+          className="textInput"
         />
       </div>
     );

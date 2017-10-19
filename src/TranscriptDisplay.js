@@ -88,7 +88,7 @@ const TranscriptDisplay = ({ transcript, matches }) => {
   const spans = getTranscriptSpans(transcript, matches);
 
   return (
-    <p>
+    <p className="transcriptDisplay">
       {spans.map((span, spanIndex) => (
         <span key={spanIndex} className={span.type && `span_${span.type}`}>
           {span.words.map(word => word.text).join(' ')}
