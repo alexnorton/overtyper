@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { Transcript } from 'transcript-model';
 
 import matchInput from './matchInput';
 import TranscriptDisplay from './TranscriptDisplay';
 
-const transcriptJson = require('./transcript.json');
+const transcript = require('./transcript.json');
 
 class App extends Component {
   constructor() {
     super();
-
-    const transcript = Transcript.fromJSON(transcriptJson);
 
     this.state = {
       transcript,

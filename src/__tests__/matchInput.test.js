@@ -1,4 +1,3 @@
-import { Transcript } from 'transcript-model';
 import fs from 'fs';
 import path from 'path';
 
@@ -6,13 +5,10 @@ import matchInput, {
   getTokens,
   getForwardsMatches,
   getBackwardsMatches,
-  getScore,
   getScores,
 } from '../matchInput';
 
-const transcript = Transcript.fromJSON(
-  JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'transcript.json'))),
-);
+const transcript = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'transcript.json')));
 
 describe('getTokens', () => {
   it('converts sentences to tokens correctly', () => {
@@ -46,14 +42,14 @@ describe('getForwardsMatches', () => {
     const matches = getForwardsMatches(scores, threshold);
 
     expect(matches).toEqual([
-      { length: 1, segment: 0, word: 6 },
-      { length: 3, segment: 0, word: 14 },
-      { length: 1, segment: 1, word: 18 },
-      { length: 4, segment: 1, word: 28 },
-      { length: 1, segment: 1, word: 31 },
-      { length: 1, segment: 2, word: 9 },
-      { length: 1, segment: 2, word: 14 },
-      { length: 1, segment: 3, word: 6 },
+      { index: 6, length: 1 },
+      { index: 14, length: 3 },
+      { index: 40, length: 1 },
+      { index: 50, length: 4 },
+      { index: 53, length: 1 },
+      { index: 70, length: 1 },
+      { index: 75, length: 1 },
+      { index: 89, length: 1 },
     ]);
   });
 });
@@ -70,27 +66,9 @@ describe('getBackwardsMatches', () => {
     const matches = getBackwardsMatches(scores, threshold);
 
     expect(matches).toEqual([
-      { segment: 0, word: 18, length: 1 },
-      { segment: 1, word: 33, length: 2 },
+      { index: 18, length: 1 },
+      { index: 55, length: 2 },
     ]);
-  });
-});
-
-describe('getScore', () => {
-  it('returns scores correctly', () => {
-    const scores = [
-      { segment: 0, word: 0, score: 0 },
-      { segment: 0, word: 1, score: 0.3 },
-      { segment: 0, word: 2, score: 0.4 },
-      { segment: 0, word: 3, score: 0.08 },
-      { segment: 0, word: 4, score: 0.52 },
-      { segment: 1, word: 0, score: 0.02 },
-      { segment: 1, word: 1, score: 0.55 },
-      { segment: 1, word: 2, score: 0.21 },
-      { segment: 1, word: 3, score: 0.05 },
-    ];
-
-    expect(getScore(scores, 0, 3)).toBe(0.08);
   });
 });
 
@@ -105,8 +83,8 @@ describe('matchInput', () => {
     const input = 'listened and something the scottish';
 
     expect(matchInput(input, transcript)).toEqual([{
-      start: { segment: 2, word: 6, length: 2 },
-      end: { segment: 2, word: 9, length: 2 },
+      start: { index: 67, length: 2 },
+      end: { index: 70, length: 2 },
       replacement: 'something',
     }]);
   });
@@ -116,12 +94,12 @@ describe('matchInput', () => {
 
     expect(matchInput(input, transcript)).toEqual([
       {
-        start: { segment: 0, word: 0, length: 2 },
+        start: { index: 0, length: 2 },
         end: null,
         replacement: null,
       },
       {
-        start: { segment: 2, word: 10, length: 2 },
+        start: { index: 71, length: 2 },
         end: null,
         replacement: null,
       },
@@ -133,12 +111,12 @@ describe('matchInput', () => {
 
     expect(matchInput(input, transcript)).toEqual([
       {
-        start: { segment: 0, word: 0, length: 2 },
+        start: { index: 0, length: 2 },
         end: null,
         replacement: 'something',
       },
       {
-        start: { segment: 2, word: 10, length: 2 },
+        start: { index: 71, length: 2 },
         end: null,
         replacement: 'something',
       },
