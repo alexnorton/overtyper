@@ -1,12 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { Transcript } from 'transcript-model';
 
 import { getTranscriptSpans } from '../TranscriptDisplay';
 
-const transcript = Transcript.fromJSON(
-  JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'transcript.json'))),
-);
+const transcript = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'transcript.json')));
 
 describe('getTranscriptSpans', () => {
   it('returns correct spans when there are no matches', () => {
@@ -22,12 +19,12 @@ describe('getTranscriptSpans', () => {
   it('returns correct spans when there are potential matches', () => {
     const matches = [
       {
-        start: { segment: 0, word: 0, length: 2 },
+        start: { index: 0, length: 2 },
         end: null,
         replacement: null,
       },
       {
-        start: { segment: 2, word: 10, length: 2 },
+        start: { index: 71, length: 2 },
         end: null,
         replacement: null,
       },
@@ -43,12 +40,12 @@ describe('getTranscriptSpans', () => {
   it('returns correct spans when there are potential matches with replacements', () => {
     const matches = [
       {
-        start: { segment: 0, word: 0, length: 2 },
+        start: { index: 0, length: 2 },
         end: null,
         replacement: 'hello',
       },
       {
-        start: { segment: 2, word: 10, length: 2 },
+        start: { index: 71, length: 2 },
         end: null,
         replacement: 'hello',
       },
@@ -63,8 +60,8 @@ describe('getTranscriptSpans', () => {
 
   it('returns correct spans when there is a final match', () => {
     const matches = [{
-      start: { segment: 2, word: 10, length: 2 },
-      end: { segment: 2, word: 13, length: 1 },
+      start: { index: 71, length: 2 },
+      end: { index: 74, length: 1 },
       replacement: 'hello',
     }];
 
