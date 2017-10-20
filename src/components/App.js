@@ -24,6 +24,7 @@ class App extends Component {
       this.setState({
         playing: true,
       });
+      this.input.focus();
     });
 
     this.player.addEventListener('pause', () => {
@@ -71,6 +72,7 @@ class App extends Component {
           value={this.state.inputValue}
           onChange={this.handleInputChange}
           className="textInput"
+          ref={(input) => { this.input = input; }}
         />
       </div>
     );
