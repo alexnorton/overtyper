@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { getTranscriptSpans } from '../TranscriptDisplay';
+import { getTranscriptSpans } from '../components/TranscriptDisplay';
 
 const transcript = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'transcript.json')));
 

@@ -86,6 +86,10 @@ const matchInput = (input, transcript) => {
       (a, b) => b.length - a.length,
     );
 
+    const topForwardsMatches = sortedForwardsMatches.filter(
+      match => match.length === sortedForwardsMatches[0].length
+    );
+
     if (forwardsMatches.length < tokens.length) {
       const backwardsMatches = getBackwardsMatches(scores, SCORE_THRESHOLD);
 
@@ -94,18 +98,33 @@ const matchInput = (input, transcript) => {
           (a, b) => b.length - a.length,
         );
 
-        return [{
-          start: sortedForwardsMatches[0],
-          end: sortedBackwardsMatches[0],
-          replacement: tokens.slice(
-            sortedForwardsMatches[0].length,
-            tokens.length - sortedBackwardsMatches[0].length,
-          ).join(' '),
-        }];
+        const potentialMatches = topForwardsMatches.map(forwardsMatch =>
+          backwardsMatches
+            .filter(backwardsMatch => backwardsMatch.index > forwardsMatch.index)
+            .map(backwardsMatch => ({
+              start: forwardsMatch,
+              end: backwardsMatch,
+              replacement: tokens.slice(
+                forwardsMatch.length,
+                tokens.length - backwardsMatch.length,
+              ).join(' '),
+            }))
+        ).reduce((a, b) => a.concat(b), []);
+
+        return potentialMatches;
+
+        // return [{
+        //   start: sortedForwardsMatches[0],
+        //   end: sortedBackwardsMatches[0],
+        //   replacement: tokens.slice(
+        //     sortedForwardsMatches[0].length,
+        //     tokens.length - sortedBackwardsMatches[0].length,
+        //   ).join(' '),
+        // }];
       }
     }
 
-    return sortedForwardsMatches.map(match => ({
+    return topForwardsMatches.map(match => ({
       start: match,
       end: null,
       replacement: tokens.length > match.length

@@ -84,16 +84,50 @@ const getTranscriptSpans = (transcript, matches) => {
   return spans;
 };
 
-const TranscriptDisplay = ({ transcript, matches }) => {
-  const spans = getTranscriptSpans(transcript, matches);
+// const TranscriptDisplay = ({ transcript, matches }) => {
+//   const spans = getTranscriptSpans(transcript, matches);
+
+//   const 
+
+//   return (
+//     <p className="transcriptDisplay">
+//       {spans.map((span, spanIndex) => (
+//         <span key={spanIndex} className={span.type && `span_${span.type}`}>
+//           {span.words.map(word => word.text).join(' ')}
+//         </span>
+//       )).reduce((prev, curr) => [prev, ' ', curr])}
+//     </p>
+//   );
+// };
+
+const TranscriptDisplay = ({ transcript, matches, currentTime, correctionWindow }) => {
+  const playedWords = transcript
+    .filter(word => word.start <= currentTime);
+
+  const uncorrectablePlayedWords = playedWords
+    .filter(word => word.end < currentTime - correctionWindow);
+
+  const correctablePlayedWords = playedWords
+    .filter(word => word.end >= currentTime - correctionWindow);
+
+  const unplayedWords = transcript
+    .filter(word => word.start > currentTime);
 
   return (
     <p className="transcriptDisplay">
-      {spans.map((span, spanIndex) => (
-        <span key={spanIndex} className={span.type && `span_${span.type}`}>
-          {span.words.map(word => word.text).join(' ')}
+      <span className="transcriptDisplay--played">
+        <span className="transcriptDisplay--played_uncorrectable">
+          {uncorrectablePlayedWords.map(word => word.text).join(' ')}
         </span>
-      )).reduce((prev, curr) => [prev, ' ', curr])}
+        {' '}
+        <span className="transcriptDisplay--played_correctable">
+          {correctablePlayedWords.map(word => word.text).join(' ')}
+        </span>
+      </span>
+      {' '}
+      <span className="transcriptDisplay--unplayed">
+        {unplayedWords.map(word => word.text).join(' ')}
+      </span>
     </p>
   );
 };
