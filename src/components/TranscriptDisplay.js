@@ -100,50 +100,23 @@ const getTranscriptSpans = (transcript, matches) => {
 //   );
 // };
 
-const TranscriptDisplay = ({ transcript, matches, currentTime, correctionWindow }) => {
-  const playedWords = transcript
-    .filter(word => word.start <= currentTime);
-
-  const uncorrectablePlayedWords = playedWords
-    .filter(word => word.end < currentTime - correctionWindow);
-
-  const correctablePlayedWords = playedWords
-    .filter(word => word.end >= currentTime - correctionWindow);
-
-  const unplayedWords = transcript
-    .filter(word => word.start > currentTime);
-
-  return (
-    <p className="transcriptDisplay">
-      <span className="transcriptDisplay--played">
-        <span className="transcriptDisplay--played_uncorrectable">
-          {uncorrectablePlayedWords.map(word => word.text).join(' ')}
-        </span>
-        {' '}
-        <span className="transcriptDisplay--played_correctable">
-          {correctablePlayedWords.map(word => word.text).join(' ')}
-        </span>
+const TranscriptDisplay = ({ uncorrectablePlayedWords, correctablePlayedWords, unplayedWords }) => (
+  <p className="transcriptDisplay">
+    <span className="transcriptDisplay--played">
+      <span className="transcriptDisplay--played_uncorrectable">
+        {uncorrectablePlayedWords.map(word => word.text).join(' ')}
       </span>
       {' '}
-      <span className="transcriptDisplay--unplayed">
-        {unplayedWords.map(word => word.text).join(' ')}
+      <span className="transcriptDisplay--played_correctable">
+        {correctablePlayedWords.map(word => word.text).join(' ')}
       </span>
-    </p>
-  );
-};
-
-TranscriptDisplay.propTypes = {
-  transcript: PropTypes.arrayOf(
-    PropTypes.shape(),
-  ).isRequired,
-  matches: PropTypes.arrayOf(
-    PropTypes.shape(),
-  ),
-};
-
-TranscriptDisplay.defaultProps = {
-  matches: [],
-};
+    </span>
+    {' '}
+    <span className="transcriptDisplay--unplayed">
+      {unplayedWords.map(word => word.text).join(' ')}
+    </span>
+  </p>
+);
 
 export default TranscriptDisplay;
 

@@ -51,6 +51,18 @@ class App extends Component {
   }
 
   render() {
+    const playedWords = this.state.transcript
+      .filter(word => word.start <= this.state.currentTime);
+
+    const uncorrectablePlayedWords = playedWords
+      .filter(word => word.end < this.state.currentTime - this.state.correctionWindow);
+
+    const correctablePlayedWords = playedWords
+      .filter(word => word.end >= this.state.currentTime - this.state.correctionWindow);
+
+    const unplayedWords = this.state.transcript
+      .filter(word => word.start > this.state.currentTime);
+
     return (
       <div className="container">
         <h1 className="title">Overtyper</h1>
@@ -62,10 +74,9 @@ class App extends Component {
         />
         <h2>Correction</h2>
         <TranscriptDisplay
-          transcript={this.state.transcript}
-          matches={this.state.matches}
-          currentTime={this.state.currentTime}
-          correctionWindow={this.state.correctionWindow}
+          uncorrectablePlayedWords={uncorrectablePlayedWords}
+          correctablePlayedWords={correctablePlayedWords}
+          unplayedWords={unplayedWords}
         />
         <h2>Input</h2>
         <input
