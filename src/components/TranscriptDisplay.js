@@ -10,106 +10,25 @@ const SPAN_TYPES = {
   REPLACEMENT: 'replacement',
 };
 
-const getTranscriptSpans = (transcript, matches) => {
-  let span = {
-    type: null,
-    words: [],
-  };
-
-  const spans = [];
-
-  for (let index = 0; index < transcript.length; index += 1) {
-    let spanType;
-
-    if (matches.filter(match =>
-      index >= match.start.index
-      && index < match.start.index + match.start.length,
-    ).length) {
-      spanType = SPAN_TYPES.MATCH_START;
-    } else if (matches.filter(match =>
-      match.replacement
-      && index >= match.start.index + match.start.length
-      && (
-        (!match.end && index < match.start.index + match.start.length + 1)
-        || (match.end && index < match.end.index)
-      ),
-    ).length) {
-      spanType = SPAN_TYPES.REPLACED;
-    } else if (matches.filter(match =>
-      match.end
-      && index >= match.end.index
-      && index < match.end.index + match.end.length,
-    ).length) {
-      spanType = SPAN_TYPES.MATCH_END;
-    } else {
-      spanType = null;
-    }
-
-    if (spanType !== span.type) {
-      if (span.words.length > 0) {
-        spans.push(span);
-      }
-
-      if (span.type === SPAN_TYPES.REPLACED
-        && (spanType === null || spanType === SPAN_TYPES.MATCH_END)) {
-        const thisMatch = matches.filter(match =>
-          index === match.start.index + match.start.length + 1,
-        )[0];
-
-        spans.push({
-          type: SPAN_TYPES.REPLACEMENT,
-          words: [
-            { text: thisMatch.replacement },
-          ],
-        });
-      }
-
-      span = {
-        type: spanType,
-        words: [],
-      };
-    }
-
-    const word = transcript[index];
-
-    span.words.push({
-      start: word.start,
-      end: word.end,
-      text: word.text,
-    });
-  }
-
-  spans.push(span);
-
-  return spans;
+const CorrectionWindow = ({ correctablePlayedWords, match }) => {
+  return (
+    <span className="transcriptDisplay--played_correctable">
+      {correctablePlayedWords.map(word => word.text).join(' ')}
+    </span>
+  );
 };
 
-// const TranscriptDisplay = ({ transcript, matches }) => {
-//   const spans = getTranscriptSpans(transcript, matches);
-
-//   const 
-
-//   return (
-//     <p className="transcriptDisplay">
-//       {spans.map((span, spanIndex) => (
-//         <span key={spanIndex} className={span.type && `span_${span.type}`}>
-//           {span.words.map(word => word.text).join(' ')}
-//         </span>
-//       )).reduce((prev, curr) => [prev, ' ', curr])}
-//     </p>
-//   );
-// };
-
-const TranscriptDisplay = ({ uncorrectablePlayedWords, correctablePlayedWords, unplayedWords }) => (
+const TranscriptDisplay = ({ uncorrectablePlayedWords, correctablePlayedWords, unplayedWords, match }) => (
   <p className="transcriptDisplay">
     <span className="transcriptDisplay--played">
       <span className="transcriptDisplay--played_uncorrectable">
         {uncorrectablePlayedWords.map(word => word.text).join(' ')}
       </span>
       {' '}
-      <span className="transcriptDisplay--played_correctable">
-        {correctablePlayedWords.map(word => word.text).join(' ')}
-      </span>
+      <CorrectionWindow
+        correctablePlayedWords={correctablePlayedWords}
+        match={match}
+      />
     </span>
     {' '}
     <span className="transcriptDisplay--unplayed">
@@ -118,8 +37,5 @@ const TranscriptDisplay = ({ uncorrectablePlayedWords, correctablePlayedWords, u
   </p>
 );
 
-export default TranscriptDisplay;
 
-export {
-  getTranscriptSpans,
-};
+export default TranscriptDisplay;

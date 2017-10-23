@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import matchInput from '../helpers/matchInput';
 import TranscriptDisplay from './TranscriptDisplay';
+import matchCorrection from '../helpers/matchCorrection';
 
 class App extends Component {
   constructor(props) {
@@ -14,6 +14,12 @@ class App extends Component {
       correctionWindow: 5,
       playing: false,
       currentTime: 0,
+      segments: {
+        uncorrectablePlayedWords: [],
+        correctablePlayedWords: [],
+        unplayedWords: props.transcript,
+      },
+      match: null,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -34,8 +40,25 @@ class App extends Component {
     });
 
     this.player.addEventListener('timeupdate', (e) => {
+      const playedWords = this.state.transcript
+        .filter(word => word.start <= this.state.currentTime);
+
+      const uncorrectablePlayedWords = playedWords
+        .filter(word => word.end < this.state.currentTime - this.state.correctionWindow);
+
+      const correctablePlayedWords = playedWords
+        .filter(word => word.end >= this.state.currentTime - this.state.correctionWindow);
+
+      const unplayedWords = this.state.transcript
+        .filter(word => word.start > this.state.currentTime);
+
       this.setState({
         currentTime: e.target.currentTime,
+        segments: {
+          uncorrectablePlayedWords,
+          correctablePlayedWords,
+          unplayedWords,
+        },
       });
     });
   }
@@ -45,24 +68,17 @@ class App extends Component {
 
     const inputValue = e.target.value;
 
-    const matches = matchInput(inputValue, this.state.transcript);
+    const match = matchCorrection(
+      this.state.segments.correctablePlayedWords.map(w => w.text),
+      inputValue
+    );
 
-    this.setState({ inputValue, matches });
+    console.log(match);
+
+    this.setState({ inputValue, match });
   }
 
   render() {
-    const playedWords = this.state.transcript
-      .filter(word => word.start <= this.state.currentTime);
-
-    const uncorrectablePlayedWords = playedWords
-      .filter(word => word.end < this.state.currentTime - this.state.correctionWindow);
-
-    const correctablePlayedWords = playedWords
-      .filter(word => word.end >= this.state.currentTime - this.state.correctionWindow);
-
-    const unplayedWords = this.state.transcript
-      .filter(word => word.start > this.state.currentTime);
-
     return (
       <div className="container">
         <h1 className="title">Overtyper</h1>
@@ -72,19 +88,24 @@ class App extends Component {
           controlsList="nodownload"
           ref={(player) => { this.player = player; }}
         />
-        <h2>Correction</h2>
+        <h2>Transcript</h2>
         <TranscriptDisplay
-          uncorrectablePlayedWords={uncorrectablePlayedWords}
-          correctablePlayedWords={correctablePlayedWords}
-          unplayedWords={unplayedWords}
+          uncorrectablePlayedWords={this.state.segments.uncorrectablePlayedWords}
+          correctablePlayedWords={this.state.segments.correctablePlayedWords}
+          unplayedWords={this.state.segments.unplayedWords}
+          match={this.state.match}
         />
-        <h2>Input</h2>
+        <h2>Correction</h2>
         <input
           value={this.state.inputValue}
           onChange={this.handleInputChange}
           className="textInput"
           ref={(input) => { this.input = input; }}
         />
+        <h2>Match</h2>
+        <pre>
+          {JSON.stringify(this.state.match, null, 2)}
+        </pre>
       </div>
     );
   }
