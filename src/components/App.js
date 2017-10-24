@@ -102,10 +102,6 @@ class App extends Component {
           className="textInput"
           ref={(input) => { this.input = input; }}
         />
-        <h2>Match</h2>
-        <pre>
-          {JSON.stringify(this.state.match, null, 2)}
-        </pre>
       </div>
     );
   }
