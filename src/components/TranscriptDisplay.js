@@ -17,13 +17,11 @@ const CorrectionWindow = ({ correctablePlayedWords, match }) => {
 
     if (match) {
       parts.push(words.slice(0, match.start.index).join(' '));
-      parts.push(' ');
       parts.push(
         <span className={SPAN_TYPES.MATCH_START} key="match_start">
           {words.slice(match.start.index, match.start.index + match.start.length).join(' ')}
         </span>
       );
-      parts.push(' ');
 
       if (match.replacement) {
         if (match.end) {
@@ -32,19 +30,16 @@ const CorrectionWindow = ({ correctablePlayedWords, match }) => {
               {words.slice(match.start.index + match.start.length, match.end.index).join(' ')}
             </span>
           );
-          parts.push(' ');
           parts.push(
             <span className={SPAN_TYPES.REPLACEMENT} key="replacement">
               {match.replacement}
             </span>
           );
-          parts.push(' ');
           parts.push(
             <span className={SPAN_TYPES.MATCH_END} key="match_end">
               {words.slice(match.end.index, match.end.index + match.end.length).join(' ')}
             </span>
           );
-          parts.push(' ');
           parts.push(
             words.slice(match.end.index + match.end.length).join(' ')
           );
@@ -54,7 +49,6 @@ const CorrectionWindow = ({ correctablePlayedWords, match }) => {
               {match.replacement}
             </span>
           );
-          parts.push(' ');
           parts.push(
             words.slice(match.start.index + match.start.length).join(' ')
           );
@@ -68,7 +62,7 @@ const CorrectionWindow = ({ correctablePlayedWords, match }) => {
 
     return (
       <span className="transcriptDisplay--played_correctable">
-        {parts}
+        {parts.reduce((prev, curr) => [prev, ' ', curr])}
       </span>
     );
   }
