@@ -1,12 +1,12 @@
-.span_match_start, .span_match_end {
-  background: aquamarine; 
+.match_start, .match_end {
+  font-weight: bold;
 }
 
-.span_replaced {
+.replaced {
   text-decoration: line-through;
 }
 
-.span_replacement {
+.replacement {
   font-style: italic;
 }
 

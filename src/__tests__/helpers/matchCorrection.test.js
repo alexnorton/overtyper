@@ -2,7 +2,7 @@ import matchCorrection, {
   getTokens,
   getForwardsMatches,
   getBackwardsMatches,
-} from '../helpers/matchCorrection';
+} from '../../helpers/matchCorrection';
 
 const transcript = [
   'hair.', 'Lots', 'of', 'it', 'splendid', 'teeth', 'and', 'find', 'your', 'lines', 'and', 'had', 'to', 'find',
