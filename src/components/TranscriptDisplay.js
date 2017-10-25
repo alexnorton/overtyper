@@ -74,28 +74,38 @@ const CorrectionWindow = ({ correctablePlayedWords, match }) => {
   );
 };
 
-const TranscriptDisplay = ({
-  uncorrectablePlayedWords,
-  correctablePlayedWords,
-  unplayedWords, match
-}) => (
-  <p className="transcriptDisplay">
-    <span className="transcriptDisplay--played">
-      <span className="transcriptDisplay--played_uncorrectable">
-        {uncorrectablePlayedWords.map(word => word.text).join(' ')}
+const TranscriptDisplay = ({ transcript, currentTime, correctionWindow, match }) => {
+  const playedWords = transcript
+    .filter(word => word.start <= currentTime);
+
+  const uncorrectablePlayedWords = playedWords
+    .filter(word => word.end < currentTime - correctionWindow);
+
+  const correctablePlayedWords = playedWords
+    .filter(word => word.end >= currentTime - correctionWindow);
+
+  const unplayedWords = transcript
+    .filter(word => word.start > currentTime);
+
+  return (
+    <p className="transcriptDisplay">
+      <span className="transcriptDisplay--played">
+        <span className="transcriptDisplay--played_uncorrectable">
+          {uncorrectablePlayedWords.map(word => word.text).join(' ')}
+        </span>
+        {' '}
+        <CorrectionWindow
+          correctablePlayedWords={correctablePlayedWords}
+          match={match}
+        />
       </span>
       {' '}
-      <CorrectionWindow
-        correctablePlayedWords={correctablePlayedWords}
-        match={match}
-      />
-    </span>
-    {' '}
-    <span className="transcriptDisplay--unplayed">
-      {unplayedWords.map(word => word.text).join(' ')}
-    </span>
-  </p>
-);
+      <span className="transcriptDisplay--unplayed">
+        {unplayedWords.map(word => word.text).join(' ')}
+      </span>
+    </p>
+  );
+};
 
 export default TranscriptDisplay;
 
