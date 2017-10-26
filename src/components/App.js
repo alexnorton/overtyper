@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import TranscriptDisplay from './TranscriptDisplay';
 import matchCorrection from '../helpers/matchCorrection';
 import applyCorrection from '../helpers/applyCorrection';
+import isMatchComplete from '../helpers/isMatchComplete';
 
 class App extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class App extends Component {
     event.preventDefault();
 
     if (this.state.inputValue) {
-      if (this.state.match) {
+      if (this.state.match && isMatchComplete(this.state.match)) {
         this.setState({
           transcript: applyCorrection(
             this.state.transcript,
