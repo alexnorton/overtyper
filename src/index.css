@@ -1,5 +1,6 @@
 body {
   margin: 10px;
+  font-size: 18px;
 }
 
 h2 {
@@ -16,10 +17,6 @@ audio {
   max-width: 700px;
 }
 
-.transcriptDisplay {
-  font-size: 18px;
-}
-
 .textInput {
   color: #4a4a4a;
   font-size: 18px;
@@ -27,7 +24,7 @@ audio {
   border-width: 0 0 1px 0;
   border-color: #727272;
   text-align: center;
-  margin-top: 10px;
+  margin: 10px 0 40px;
 }
 
 .textInput:focus {

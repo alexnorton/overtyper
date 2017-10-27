@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import TranscriptDisplay from './TranscriptDisplay';
+import Instructions from './Instructions';
 import matchCorrection from '../helpers/matchCorrection';
 import applyCorrection from '../helpers/applyCorrection';
 import isMatchComplete from '../helpers/isMatchComplete';
@@ -121,6 +122,8 @@ class App extends Component {
             ref={(input) => { this.input = input; }}
           />
         </form>
+        <h2>Instructions</h2>
+        <Instructions />
       </div>
     );
   }
