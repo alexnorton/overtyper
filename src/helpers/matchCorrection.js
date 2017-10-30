@@ -1,6 +1,4 @@
-const normaliseToken = input => (
-  input.toLowerCase().replace(/[^A-Za-z ]/g, '')
-);
+const normaliseToken = input => input;
 
 const getTokens = input => (
   input
