@@ -122,6 +122,9 @@ class App extends Component {
             ref={(input) => { this.input = input; }}
           />
         </form>
+        <div style={{ textAlign: 'center' }}>
+          ★
+        </div>
         <h2>Instructions</h2>
         <Instructions />
       </div>
