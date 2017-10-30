@@ -14,7 +14,7 @@ describe('getTokens', () => {
 
     const output = getTokens(input);
 
-    expect(output).toEqual(['scottish', 'government', 'remains', 'committed', 'strongly', 'to', 'the', 'principle', 'of', 'giving', 'scotland', 'a', 'choice', 'at', 'the', 'end', 'of', 'this', 'process']);
+    expect(output).toEqual(['Scottish', 'Government', 'remains', 'committed', 'strongly', 'to', 'the', 'principle', 'of', 'giving', 'Scotland,', 'a', 'choice', 'at', 'the', 'end', 'of', 'this', 'process.']);
   });
 });
 
