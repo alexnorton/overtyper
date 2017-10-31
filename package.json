@@ -28,7 +28,7 @@
     "eslint-plugin-react": "^7.1.0",
     "gh-pages": "^1.0.0",
     "jest-enzyme": "^4.0.1",
-    "react-scripts": "^1.0.14",
+    "react-scripts": "^1.0.15",
     "react-test-renderer": "^16.0.0"
   },
   "homepage": "https://alexnorton.github.io/overtyper",
